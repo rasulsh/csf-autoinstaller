@@ -1,5 +1,7 @@
 #!/bin/bash
-yum install dialog -y ;
+if [ $? -ne 0 ]; then
+	yum install dialog -y ;
+fi
 ##Global varibales
 CSF="/usr/sbin/csf";
 CDF="/etc/csf/csf.deny";
@@ -29,6 +31,7 @@ fi
 function  do_config()
 {
 	clear;
+	echo -e "$GREEN [NOTICE] CSF configuraing... $RESET";
 	yum install ipset -y >/dev/null 2>&1;
 	csf -x >/dev/null 2>&1 ;
 	echo "$GREEN[NOTICE] Configure Process is runnig...$RESET";
@@ -76,8 +79,9 @@ function  do_config()
 	csf -e >/dev/null 2>&1 ;
 	csf -r >/dev/null 2>&1 ; 
 	echo -e "$GREEN [OK] finish configure $RESET";
-	read -p "$GREEN Press any key to continue... $RESET" -n1 -s ;
-	echo ;
+	echo -e "$GREEN";
+	read -p "Press any key to continue..." -n1 -s ;
+	echo -e "$RESET";
 }
 function do_install()
 {
@@ -92,8 +96,9 @@ function do_install()
 	rm -f csf.tgz ;
 	rm -rf csf/ ;
 	echo -e "$GREEN [OK] CSF installed! $RESET";
-	read -p "$GREEN Press any key to continue... $RESET" -n1 -s ;
-	echo ;
+	echo -e "$GREEN";
+	read -p "Press any key to continue... " -n1 -s ;
+	echo -e "$RESET";
 }
 
 
@@ -106,8 +111,9 @@ function do_extra() {
 	yum install  perl-libwww-perl perl-Time-HiRes -y  >/dev/null 2>&1;
 	
 	echo -e "$GREEN [OK] Extra packages installed! $RESET";
-	read -p "$GREEN Press any key to continue... $RESET" -n1 -s ;
-	echo ;
+	echo -e "$GREEN";
+	read -p "Press any key to continue... " -n1 -s ;
+	echo -e "$RESET";echo -e "$RESET";
 }
 
 ################################################################################
@@ -136,7 +142,7 @@ case $menuitem in
 	config) do_config;;
 	Extra) do_extra;;
 	Full) do_install;do_config;do_extra;;
-	Exit) echo "Bye"; break;;
+	Exit) clear;echo "Bye"; break;;
 esac
 
 done
