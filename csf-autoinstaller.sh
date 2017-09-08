@@ -1,4 +1,5 @@
 #!/bin/bash
+rpm -qa | grep dialog;
 if [ $? -ne 0 ]; then
 	yum install dialog -y ;
 fi
@@ -7,7 +8,6 @@ CSF="/usr/sbin/csf";
 CDF="/etc/csf/csf.deny";
 CONFIG="/etc/csf/csf.conf";
 IGNORE="/etc/csf/csf.pignore";
-DIR="/usr/local/directadmin/scripts/custom/";
 TO="yourmail\@domain.com";
 FROM="hostname\@domain.com";
 MYSSH="";
@@ -32,7 +32,11 @@ function  do_config()
 {
 	clear;
 	echo -e "$GREEN [NOTICE] CSF configuraing... $RESET";
-	yum install ipset -y >/dev/null 2>&1;
+	
+	rpm -qa | grep ipset;
+	if [ $? -ne 0 ]; then
+		yum install ipset -y >/dev/null 2>&1;
+	fi
 	csf -x >/dev/null 2>&1 ;
 	echo "$GREEN[NOTICE] Configure Process is runnig...$RESET";
 	perl -pi -e 's/TESTING = "1"/TESTING = "0"/g' "${CONFIG}"
@@ -105,11 +109,21 @@ function do_install()
 function do_extra() {
 	clear;
 	echo -e "$GREEN [Notice] CSF Extra packages installing...! $RESET";
-	yum install perl-libwww-perl -y  >/dev/null 2>&1;
-	yum install 'perl (IO::Socket:SSL)'  >/dev/null 2>&1;
-	yum install perl-Crypt-SSLeay -y  >/dev/null 2>&1 ;
-	yum install  perl-libwww-perl perl-Time-HiRes -y  >/dev/null 2>&1;
 	
+	rpm -qa | grep perl-libwww-perl;
+	if [ $? -ne 0 ]; then
+		yum install perl-libwww-perl -y  >/dev/null 2>&1;
+	fi
+	
+	rpm -qa | grep perl-Crypt-SSLeay;
+	if [ $? -ne 0 ]; then
+		yum install perl-Crypt-SSLeay -y  >/dev/null 2>&1 ;
+	fi
+	rpm -qa | grep perl-Time-HiRes;
+	if [ $? -ne 0 ]; then
+		yum install  perl-Time-HiRes -y  >/dev/null 2>&1;
+	fi
+	yum install 'perl (IO::Socket:SSL)'  >/dev/null 2>&1;
 	echo -e "$GREEN [OK] Extra packages installed! $RESET";
 	echo -e "$GREEN";
 	read -p "Press any key to continue... " -n1 -s ;
