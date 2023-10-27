@@ -9,9 +9,9 @@ this is an easy tool for install and configure csf for hosting servers.
 #### Installation
 ````
 cd ~
-wget -c https://raw.githubusercontent.com/Rasul-Sh/csf-autoinstaller/master/csf-autoinstaller.sh
-chmod +x csf-autoinstaller.sh
-sh csf-autoinstaller.sh
+wget -chttps://raw.githubusercontent.com/rasulsh/csf-autoinstaller/master/csf-autoinstaller.py
+chmod +x csf-autoinstaller.py
+python3 csf-autoinstaller.py
 ````
 
 Feedback, Bugs, Issues, Feature requests
