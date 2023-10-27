@@ -81,14 +81,14 @@ def configure_csf():
         read_administrator_email = input('Enter administrator email: ')
         
         if read_administrator_email == '' or checkmail(read_administrator_email) == False:
-            print('Administrator email is empty or invalid, skip')
+            print('>>>>>>>>> Administrator email is empty or invalid, skip')
         else:
             lines[lines.index('LF_ALERT_TO = ""\n')] = 'LF_ALERT_TO = "{}"\n'.format(read_administrator_email)
         
         read_custom_TCP_ports    = input('Enter custom TCP PORTS (seperate with english comma): ')
 
         if read_custom_TCP_ports == '':
-            print('Custom TCP ports is empty, skip')
+            print('>>>>>>>>> Custom TCP ports is empty, skip')
         else:
             lines = replace_port_vars(lines,'TCP_IN',read_custom_TCP_ports)
             lines = replace_port_vars(lines,'TCP_OUT',read_custom_TCP_ports)
@@ -96,7 +96,7 @@ def configure_csf():
         read_custom_UDP_ports    = input('Enter custom UDP PORTS (seperate with english comma): ')
 
         if read_custom_UDP_ports == '':
-            print('Custom UDP ports is empty, skip')
+            print('>>>>>>>>> Custom UDP ports is empty, skip')
         else:
             lines = replace_port_vars(lines,'UDP_IN',read_custom_UDP_ports)
             lines = replace_port_vars(lines,'UDP_OUT',read_custom_UDP_ports)
@@ -148,7 +148,7 @@ configure_csf()
 run_command('csf -x ; csf -e ; clear')
 run_command('systemctl status lfd')
 print('\n----------------------------------------------\n')
-run_command('systemctl status lfd')
+run_command('systemctl status csf')
 
 
 # clear temporary files
