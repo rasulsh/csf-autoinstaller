@@ -47,7 +47,7 @@ def run_command(command):
     os.system(command)
 
 def get_bash_path():
-    return os.environ['SHELL']
+    return os.environ.get('SHELL', '/bin/bash')
 
 def replace_port_vars(file_content,var_name,append_values):
     for i, line in enumerate(file_content):
